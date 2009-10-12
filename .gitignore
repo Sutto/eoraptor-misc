@@ -1,0 +1,4 @@
+tmp/**/*
+log/**/*
+config/settings.yml
+db/*.sqlite3

@@ -9,7 +9,7 @@ module Eoraptor
   require 'eoraptor/hooks'
   
   # Applications should ALWAYS be last. It defines the actual application
-  DEFAULT_PLUGIN_ORDER = [:show_exceptions, :rack_bug, :models, :sinatra_applications]
+  DEFAULT_PLUGIN_ORDER = [:errors, :show_exceptions, :rack_bug, :models, :sinatra_applications]
   
   class << self
     
@@ -30,7 +30,7 @@ module Eoraptor
     end
     
     def env
-      @env ||= "development"
+      @env ||= (ENV['RACK_ENV'] || "development")
     end
     
     def [](path)
@@ -78,5 +78,6 @@ module Eoraptor
   require 'eoraptor/show_exceptions'
   require 'eoraptor/rack_bug'
   require 'eoraptor/sinatra_applications'
+  require 'eoraptor/error_renderer_plugin'
   
 end

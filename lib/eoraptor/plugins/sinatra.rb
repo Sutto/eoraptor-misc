@@ -19,10 +19,10 @@ module Eoraptor
     def setup
       Eoraptor.after_setup do
         SinatraApps.apps.each do |application|
-          if application.is_a?(SinatraApp)
-            Eoraptor.app(application.new)
-          elsif application.is_a?(Array)
+          if application.is_a?(Array)
             Eoraptor.map(application.first, application.last)
+          else
+            Eoraptor.app(application.new)
           end
         end
       end

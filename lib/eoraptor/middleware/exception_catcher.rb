@@ -14,7 +14,7 @@ module Eoraptor
     end
     
     def _call(env)
-      @app.call(app)
+      @app.call(env)
     rescue Exception => e
       @exception_notifier.call(env, e) if Eoraptor.env == "production"
       if Eoraptor.env == "development"

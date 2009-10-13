@@ -33,7 +33,7 @@ module Eoraptor
     protected
     
     def load_from_dir(dir)
-      Dir[dir.join("**", "*.rb")].each { |r| require f }
+      Dir[dir.join("**", "*.rb")].each { |f| require f }
     end
     
     extend self

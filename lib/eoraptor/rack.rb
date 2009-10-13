@@ -27,8 +27,8 @@ module Eoraptor
   class RackStack
     
     def initialize(&blk)
-      @apps       = {}
-      @middleware = {}
+      @apps       = []
+      @middleware = []
       @route_map  = {}
       instance_eval(&blk) if block_given?
     end
@@ -46,7 +46,7 @@ module Eoraptor
     end
     
     def map(route, app = nil, &blk)
-      if app.present?
+      if !app.nil?
         @route_map[route] = lambda { app }
       else
         @route_map[route] = lambda { RackStack.new(&blk).to_app }

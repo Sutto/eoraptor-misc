@@ -60,7 +60,7 @@ module Eoraptor
       method = request.request_method.downcase
       if respond_to?(method.to_sym)
         results = send(method)
-        render(results) if !results.is_a?(String)
+        render(results) if results.is_a?(String)
       end
       @response.finish
     end

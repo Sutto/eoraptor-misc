@@ -32,5 +32,7 @@ module Eoraptor
     require 'eoraptor/plugins'
     require 'eoraptor/rack'
     
+    require 'eoraptor/skeleton_app'
+    
   end
 end

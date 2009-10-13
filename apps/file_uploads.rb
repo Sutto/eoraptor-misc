@@ -1,8 +1,9 @@
-class FileUploads < Eoraptor::SimpleApp
+class FileUploads < Eoraptor::SkeletonApp
   
-  matches_url "/upload"
+  matches_url "/uploads"
   
-  def post
+  def get
+    "Hello there"
   end
   
 end

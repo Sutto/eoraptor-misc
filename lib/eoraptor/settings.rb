@@ -15,10 +15,10 @@ module Eoraptor
     end
     
     def self.setup!
-      settings_file = root.join("config", "settings.yml")
+      settings_file = Eoraptor.root.join("config", "settings.yml")
       if File.exist?(settings_file)
         contents = YAML.load_file(settings_file)
-        @settings = (contents['default']||{}).merge(contents[env]||{})
+        @settings = (contents['default']||{}).merge(contents[Eoraptor.env]||{})
       else
         @settings = {}
       end

@@ -5,7 +5,6 @@ Eoraptor::Plugin(:models) do
   end
   
   def setup
-    
     setup_database
     model_dir = Eoraptor.root.join("models")
     $:.unshift(model_dir)
@@ -13,9 +12,17 @@ Eoraptor::Plugin(:models) do
     Dir[Eoraptor.root.join("models", "**", "*.rb")].each do |file|
       require File.basename(file.to_s.gsub("#{model_dir}/", ""))
     end
+    define_migrator
   end 
   
   protected
+  
+  def define_migrator
+    require 'sequel/extensions/migration'
+    def Eoraptor.migrate!
+      Sequel::Migrator.apply(Eoraptor.database, Eoraptor.root.join("migrations").to_s)
+    end
+  end
   
   def setup_database
     require 'sequel'

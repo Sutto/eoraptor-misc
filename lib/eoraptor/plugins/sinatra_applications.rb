@@ -6,7 +6,7 @@ module Eoraptor
   
   class SinatraApps < Plugin
     
-    register_as :sinatra_applications
+    register_as :sinatra
 
     def self.apps
       @apps ||= []
@@ -17,13 +17,10 @@ module Eoraptor
     end
 
     def setup
-      Dir[Eoraptor.root.join("apps", "**", "*.rb")].each do |application|
-        require application
-      end
       Eoraptor.after_setup do
         SinatraApps.apps.each do |application|
           if application.is_a?(SinatraApp)
-            Eoraptor.apps << application.new
+            Eoraptor.app(application.new)
           elsif application.is_a?(Array)
             Eoraptor.map(application.first, application.last)
           end

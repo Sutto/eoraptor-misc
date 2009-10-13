@@ -20,15 +20,13 @@ Eoraptor::Plugin(:models) do
   def define_migrator
     require 'sequel/extensions/migration'
     def Eoraptor.migrate!
-      Sequel::Migrator.apply(Eoraptor.database, Eoraptor.root.join("migrations").to_s)
+      Sequel::Migrator.apply(Eoraptor.database, Eoraptor.root.join("db", "migrations").to_s)
     end
   end
   
   def setup_database
     require 'sequel'
-    class << Eoraptor
-      attr_accessor :database
-    end
+    class << Eoraptor;  attr_accessor :database; end
     Eoraptor.database = Sequel.connect(Eoraptor['database'])
   end
   

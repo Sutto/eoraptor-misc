@@ -59,7 +59,8 @@ module Eoraptor
       @path     = request.path_info
       method = request.request_method.downcase
       if respond_to?(method.to_sym)
-        render(results) if send(method).is_a?(String)
+        results = send(method)
+        render(results) if results.is_a?(String)
       end
       @response.finish
     end
@@ -71,7 +72,7 @@ module Eoraptor
     end
     
     def session
-      @request.env["rack.session"]
+      @request.env["rack.session"] ||= {}
     end
     
     def cookies
@@ -89,6 +90,10 @@ module Eoraptor
     
     def u(path)
       "#{@request.script_name}#{path}"
+    end
+    
+    def h(text)
+      Rack::Utils.escape_html(text)
     end
     
     # Blank NOP's for the actual implementation

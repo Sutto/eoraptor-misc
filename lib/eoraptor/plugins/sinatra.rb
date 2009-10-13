@@ -40,10 +40,6 @@ module Eoraptor
       super
     end
     
-    def session
-      env['rack.session'] || {}
-    end
-    
     def h(text)
       Rack::Utils.escape_html(text)
     end

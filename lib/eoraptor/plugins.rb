@@ -2,7 +2,7 @@ module Eoraptor
   
   module PluginLoader
     
-    DEFAULT_LOAD_ORDER = [:errors, :exceptions, :debugging, :models, :sinatra]
+    DEFAULT_LOAD_ORDER = [:errors, :exceptions, :sessions, :debugging, :models, :sinatra]
     
     def plugins
       @@plugins ||= {}

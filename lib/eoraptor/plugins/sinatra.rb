@@ -32,7 +32,8 @@ module Eoraptor
   
   class SinatraApp < ::Sinatra::Base
     
-    set :views,  Eoraptor.root.join("views").to_s
+    set :root,   Proc.new { __DIR__ }
+    set :views,  Proc.new { File.join(__DIR__, "views") }
     set :public, Eoraptor.root.join("public").to_s
     
     def self.inherited(klass)

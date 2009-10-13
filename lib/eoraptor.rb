@@ -5,6 +5,8 @@ require 'rack'
 lib_dir = Pathname(__FILE__).dirname.expand_path
 $:.unshift(lib_dir) unless $:.include?(lib_dir)
 
+require 'eoraptor/core_ext'
+
 module Eoraptor
   require 'eoraptor/hooks'
   
@@ -22,6 +24,10 @@ module Eoraptor
       @env ||= (ENV['RACK_ENV'] || "development")
     end
     
+    def subapp_path(*args)
+      root.join("apps", "*", *args)
+    end
+    
     def setup
       Eoraptor::Hooks.invoke!(self, :before_setup)
       Eoraptor::Hooks.invoke!(self, :during_setup)
@@ -31,7 +37,6 @@ module Eoraptor
     require 'eoraptor/settings'
     require 'eoraptor/plugins'
     require 'eoraptor/rack'
-    
     require 'eoraptor/skeleton_app'
     
   end

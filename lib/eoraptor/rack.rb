@@ -72,7 +72,8 @@ module Eoraptor
   
   # This is run after plugins have been loaded
   during_setup do
-    Dir[Eoraptor.root.join("apps", "**", "*.rb")].each do |application|
+    
+    Dir[Eoraptor.subapp_path("*.rb")].each do |application|
       require application
     end
   end

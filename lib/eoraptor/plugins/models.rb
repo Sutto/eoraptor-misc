@@ -9,7 +9,7 @@ Eoraptor::Plugin(:models) do
     model_dir = Eoraptor.root.join("models")
     $:.unshift(model_dir)
     # Load all of the models
-    Dir[Eoraptor.root.join("models", "**", "*.rb")].each do |file|
+    Dir[Eoraptor.subapp_path("models", "**", "*.rb")].each do |file|
       require File.basename(file.to_s.gsub("#{model_dir}/", ""))
     end
     define_migrator

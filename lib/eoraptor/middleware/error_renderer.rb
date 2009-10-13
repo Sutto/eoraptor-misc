@@ -10,7 +10,7 @@ module Eoraptor
       class << self
         
         def template_path_for(code)
-          Eoraptor.root.join("views", "errors", "#{code}.haml")
+          Eoraptor.root.join("apps", "errors", "views", "#{code}.haml")
         end
 
         def response_for(code, template_path = template_path_for(code))

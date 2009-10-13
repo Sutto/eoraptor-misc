@@ -32,13 +32,29 @@ module Eoraptor
   
   class SinatraApp < ::Sinatra::Base
     
-    set :root,   Proc.new { __DIR__ }
-    set :views,  Proc.new { File.join(__DIR__, "views") }
+    set(:root, Proc.new do
+      app_name = self.eoraptor_app_name || "default"
+      Eoraptor.root.join("apps", app_name).to_s
+    end)
+    set :views,  Proc.new { File.join(root, "views") }
     set :public, Eoraptor.root.join("public").to_s
     
-    def self.inherited(klass)
-      SinatraApps.apps << klass
-      super
+    class << self
+      
+      attr_accessor :eoraptor_app_name
+      
+      def inherited(klass)
+        klass.eoraptor_app_name = Eoraptor.current_app_name
+        SinatraApps.apps << klass
+        super
+      end
+      
+      def mapping_via(sub_path)
+        SinatraApps.apps.delete(self)
+        klass = self
+        SinatraApps.apps << [sub_path, klass]
+      end
+      
     end
     
     def h(text)
@@ -46,22 +62,18 @@ module Eoraptor
     end
     
     def u(url, opts = {})
-      path = "#{env["SCRIPT_NAME"]}/#{url}"
+      path = File.join(request.script_name, url)
       query_string = []
-      opts.each_pair { |k, v| query_string << "#{URI.escape(k)}=#{URI.escape(v)}" }
+      opts.each_pair { |k, v| query_string << "#{URI.escape(k.to_s)}=#{URI.escape(v.to_s)}" }
       path << "?#{query_string.join("&")}" if !query_string.empty?
       return path
-    end
-    
-    def self.mapping_via(sub_path)
-      SinatraApps.apps.delete(self)
-      klass = self
-      SinatraApps.apps << [sub_path, klass]
     end
     
   end
   
   class StylesheetApp < SinatraApp
+    
+    def self.current_app_name; ""; end
     
     mapping_via '/stylesheets'
     

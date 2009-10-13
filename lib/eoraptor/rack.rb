@@ -70,11 +70,16 @@ module Eoraptor
   
   extend DefaultRackStack
   
+  class << self; attr_accessor :current_app_name; end
+  
   # This is run after plugins have been loaded
   during_setup do
     
     Dir[Eoraptor.subapp_path("*.rb")].each do |application|
+      current_app_name = File.basename(File.dirname(application))
+      last_name, Eoraptor.current_app_name = Eoraptor.current_app_name, current_app_name
       require application
+      Eoraptor.current_app_name = last_name
     end
   end
   

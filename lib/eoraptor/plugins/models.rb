@@ -6,11 +6,11 @@ Eoraptor::Plugin(:models) do
   
   def setup
     setup_database
-    model_dir = Eoraptor.root.join("models")
-    $:.unshift(model_dir)
     # Load all of the models
     Dir[Eoraptor.subapp_path("models", "**", "*.rb")].each do |file|
-      require File.basename(file.to_s.gsub("#{model_dir}/", ""))
+      model_folder = file.to_s.gsub(/models\/(.*)\.rb$/, 'models')
+      $:.unshift(model_folder) unless $:.include?($:)
+      require File.basename(file.to_s.gsub("#{model_folder}/", ""))
     end
     define_migrator
   end 

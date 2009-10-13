@@ -1,11 +1,14 @@
 module Eoraptor
   class ContactApp < Eoraptor::SinatraApp
     
-    get '/contact' do
-      "Root: #{options.root}<br/>Views: #{options.views}"
+    mapping_via '/contact'
+    
+    get '/' do
+      haml :index
     end
     
-    post '/contact' do
+    post '/' do
+      redirect u('/', :sent => true)
     end
     
   end

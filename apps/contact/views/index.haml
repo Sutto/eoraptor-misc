@@ -1,0 +1,6 @@
+- if params[:sent] == "true"
+  #sent OH NOES IT WAS SENT!
+
+%form{:action => u('/'), :method => 'post'}
+  %label Whom:
+  %input{:type => "text", :name => "whom"}/

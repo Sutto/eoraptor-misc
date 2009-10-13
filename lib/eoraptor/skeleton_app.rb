@@ -88,8 +88,12 @@ module Eoraptor
       ""
     end
     
-    def u(path)
-      "#{@request.script_name}#{path}"
+    def u(url, opts = {})
+      path = File.join(request.script_name, url)
+      query_string = []
+      opts.each_pair { |k, v| query_string << "#{URI.escape(k.to_s)}=#{URI.escape(v.to_s)}" }
+      path << "?#{query_string.join("&")}" if !query_string.empty?
+      return path
     end
     
     def h(text)

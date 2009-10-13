@@ -1,5 +1,5 @@
 module Eoraptor
-  class SimpleApp
+  class SkeletonApp
     
     class CookieJar
       

@@ -1,4 +1,4 @@
-Eoraptor::Plugin(:rack_bug) do
+Eoraptor::Plugin(:debugging) do
   
   def use?
     Eoraptor.env == "development"
